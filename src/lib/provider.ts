@@ -205,6 +205,7 @@ const ContactForm = () => {
     email: '',
     message: ''
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -216,65 +217,74 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    // Handle form submission here
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+    <div className="max-w-lg mx-auto">
+      <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
+        <div className="bg-gradient-to-r from-violet-600 to-indigo-600 px-8 py-6">
+          <h2 className="text-2xl font-semibold text-white tracking-tight">Get in Touch</h2>
+          <p className="text-violet-200 text-sm mt-1">We'd love to hear from you</p>
         </div>
-        
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-        >
-          Send Message
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="p-8 space-y-5">
+          <div>
+            <label htmlFor="name" className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Your full name"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-400 transition-all"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="you@example.com"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-400 transition-all"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows={4}
+              placeholder="Tell us what's on your mind..."
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-400 transition-all resize-none"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white py-3.5 px-6 rounded-xl font-medium hover:shadow-lg hover:shadow-violet-500/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50"
+          >
+            {submitted ? '✓ Message Sent!' : 'Send Message'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
@@ -284,26 +294,35 @@ export default ContactForm;`;
       case "card":
         return `import React from 'react';
 
-const Card = ({ 
-  title = "Welcome to Our Service", 
+const Card = ({
+  title = "Welcome to Our Service",
   description = "Discover amazing features and capabilities that will transform your experience.",
   imageUrl,
-  actions 
+  actions
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      {imageUrl && (
-        <img 
-          src={imageUrl} 
-          alt={title}
-          className="w-full h-48 object-cover"
-        />
+    <div className="group bg-white rounded-2xl border border-slate-200/60 overflow-hidden hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">
+      {imageUrl ? (
+        <div className="relative overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        </div>
+      ) : (
+        <div className="h-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500" />
       )}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 mb-4">{description}</p>
+      <div className="p-8">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-2 h-2 rounded-full bg-indigo-500" />
+          <span className="text-xs font-medium text-indigo-600 uppercase tracking-wider">Featured</span>
+        </div>
+        <h3 className="text-xl font-semibold text-slate-900 tracking-tight mb-3">{title}</h3>
+        <p className="text-slate-500 leading-relaxed text-[15px]">{description}</p>
         {actions && (
-          <div className="mt-4">
+          <div className="mt-6 pt-6 border-t border-slate-100">
             {actions}
           </div>
         )}
@@ -320,41 +339,45 @@ export default Card;`;
 const Counter = () => {
   const [count, setCount] = useState(0);
 
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  const decrement = () => {
-    setCount(count - 1);
-  };
-
-  const reset = () => {
-    setCount(0);
-  };
+  const increment = () => setCount(prev => prev + 1);
+  const decrement = () => setCount(prev => prev - 1);
+  const reset = () => setCount(0);
 
   return (
-    <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Counter</h2>
-      <div className="text-4xl font-bold mb-6">{count}</div>
-      <div className="flex gap-4">
-        <button 
-          onClick={decrement}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-        >
-          Decrease
-        </button>
-        <button 
-          onClick={reset}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
-        >
-          Reset
-        </button>
-        <button 
-          onClick={increment}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
-        >
-          Increase
-        </button>
+    <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
+      <div className="px-8 pt-8 pb-4">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <span className="text-white text-sm font-semibold">#</span>
+          </div>
+          <h2 className="text-lg font-semibold text-slate-900 tracking-tight">Counter</h2>
+        </div>
+        <div className="flex flex-col items-center py-8">
+          <span className="text-6xl font-semibold text-slate-900 tracking-tight tabular-nums">{count}</span>
+          <span className="text-sm text-slate-400 mt-2">Current value</span>
+        </div>
+      </div>
+      <div className="px-8 pb-8">
+        <div className="flex gap-3">
+          <button
+            onClick={decrement}
+            className="flex-1 px-5 py-3 bg-slate-50 text-slate-700 font-medium rounded-xl border border-slate-200/60 hover:bg-slate-100 hover:border-slate-300 active:scale-[0.98] transition-all duration-200"
+          >
+            − Decrease
+          </button>
+          <button
+            onClick={reset}
+            className="px-5 py-3 text-slate-400 font-medium rounded-xl hover:bg-slate-50 hover:text-slate-600 active:scale-[0.98] transition-all duration-200"
+          >
+            Reset
+          </button>
+          <button
+            onClick={increment}
+            className="flex-1 px-5 py-3 bg-gradient-to-r from-indigo-500 to-violet-600 text-white font-medium rounded-xl shadow-sm hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+          >
+            + Increase
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -369,20 +392,20 @@ export default Counter;`;
       case "form":
         return "    console.log('Form submitted:', formData);";
       case "card":
-        return '      <div className="p-6">';
+        return '          <span className="text-xs font-medium text-indigo-600 uppercase tracking-wider">Featured</span>';
       default:
-        return "  const increment = () => setCount(count + 1);";
+        return '          <span className="text-sm text-slate-400 mt-2">Current value</span>';
     }
   }
 
   private getNewStringForReplace(componentType: string): string {
     switch (componentType) {
       case "form":
-        return "    console.log('Form submitted:', formData);\n    alert('Thank you! We\\'ll get back to you soon.');";
+        return "    console.log('Form submitted:', formData);\n    setSubmitted(true);\n    setTimeout(() => setSubmitted(false), 3000);";
       case "card":
-        return '      <div className="p-6 hover:bg-gray-50 transition-colors">';
+        return '          <span className="text-xs font-medium text-indigo-600 uppercase tracking-wider">Featured</span>\n          <span className="ml-auto text-xs text-slate-400">New</span>';
       default:
-        return "  const increment = () => setCount(prev => prev + 1);";
+        return '          <span className="text-sm text-slate-400 mt-2">{count === 0 ? "Tap a button to start" : "Current value"}</span>';
     }
   }
 
@@ -392,15 +415,20 @@ export default Counter;`;
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-12">
       <div className="w-full max-w-md">
-        <Card 
+        <Card
           title="Amazing Product"
           description="This is a fantastic product that will change your life. Experience the difference today!"
           actions={
-            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-              Learn More
-            </button>
+            <div className="flex items-center gap-3">
+              <button className="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5 transition-all duration-200">
+                Learn More
+              </button>
+              <button className="px-5 py-2.5 text-slate-500 text-sm font-medium rounded-xl hover:bg-slate-50 transition-all duration-200">
+                Dismiss
+              </button>
+            </div>
           }
         />
       </div>
@@ -413,7 +441,7 @@ export default function App() {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-12">
       <div className="w-full max-w-md">
         <${componentName} />
       </div>
