@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Plus, LogOut, FolderOpen, ChevronDown } from "lucide-react";
@@ -69,28 +69,28 @@ export function HeaderActions({ user, projectId }: HeaderActionsProps) {
 
   const currentProject = projects.find((p) => p.id === projectId);
 
-  const handleSignInClick = () => {
+  const handleSignInClick = useCallback(() => {
     setAuthMode("signin");
     setAuthDialogOpen(true);
-  };
+  }, []);
 
-  const handleSignUpClick = () => {
+  const handleSignUpClick = useCallback(() => {
     setAuthMode("signup");
     setAuthDialogOpen(true);
-  };
+  }, []);
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     await signOut();
-  };
+  }, []);
 
-  const handleNewDesign = async () => {
+  const handleNewDesign = useCallback(async () => {
     const project = await createProject({
       name: `Design #${~~(Math.random() * 100000)}`,
       messages: [],
       data: {},
     });
     router.push(`/${project.id}`);
-  };
+  }, [router]);
 
   if (!user) {
     return (
